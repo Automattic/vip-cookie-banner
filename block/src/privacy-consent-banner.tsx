@@ -1,16 +1,38 @@
-import { Button } from '@wordpress/components';
-import { useEffect, useState } from 'react';
-import ConsentBanner from './ConsentBanner';
-import { refreshCountryCodeCookieGdpr } from './utils';
+import { CookieBannerProps } from '@automattic/privacy-toolset/dist/types';
+import { useCallback, useEffect, useState } from 'react';
+import useCookieBannerContent from './ConsentBanner/use-cookie-banner-content';
+import {
+	getTrackingPrefs,
+	refreshCountryCodeCookieGdpr,
+	setTrackingPrefs,
+	shouldSeeCookieBanner,
+} from './utils';
+import { CookieBanner } from '@automattic/privacy-toolset';
+import cookie from 'cookie';
+import gtmInit from './gtm-init';
+
+gtmInit();
+
+// @ts-ignore
 const { render } = wp.element;
 
-const click = () => {
-	gtag('consent', 'update', {
-		ad_storage: 'granted',
-		analytics_storage: 'denied',
-	});
+const CookieBannerInner = ({ onClose }: { onClose: () => void }) => {
+	const content = useCookieBannerContent();
+
+	const handleAccept = useCallback<CookieBannerProps['onAccept']>(
+		(buckets) => {
+			setTrackingPrefs({ ok: true, buckets });
+			onClose();
+		},
+		[onClose]
+	);
+
+	// TODO Replace cookie bannner view analytics action
+
+	return <CookieBanner content={content} onAccept={handleAccept} />;
 };
-const FrontEnd: React.FC = () => {
+
+const CookieBannerContainer = () => {
 	const [show, setShow] = useState(false);
 
 	useEffect(() => {
@@ -19,22 +41,27 @@ const FrontEnd: React.FC = () => {
 		refreshCountryCodeCookieGdpr(controller.signal)
 			.then(() => {
 				const cookies = cookie.parse(document.cookie);
-				// setShow(shouldSeeCookieBanner(cookies.country_code, getTrackingPrefs()));
+
+				setShow(shouldSeeCookieBanner(cookies.country_code, getTrackingPrefs()));
 			})
 			.catch(() => {
-				// setShow(shouldSeeCookieBanner(undefined, getTrackingPrefs()));
+				setShow(shouldSeeCookieBanner(undefined, getTrackingPrefs()));
 			});
 
 		return () => controller.abort();
 	}, [setShow]);
 
-	return <Button onClick={() => click()}>Test</Button>;
+	const handleClose = useCallback(() => {
+		setShow(false);
+	}, [setShow]);
+
+	return show ? <CookieBannerInner onClose={handleClose} /> : null;
 };
 
 const renderFrontEnd = () => {
 	const selector = '#privacy-consent-banner';
 
-	render(<FrontEnd />, document.querySelector(selector));
+	render(<CookieBannerContainer />, document.querySelector(selector));
 };
 
 document.addEventListener('DOMContentLoaded', renderFrontEnd, false);
