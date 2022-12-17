@@ -1,14 +1,14 @@
 import cookie from 'cookie';
-import { getTrackingPrefs, TRACKING_PREFS_COOKIE_V2 } from '.';
+import { getTrackingPrefs, TRACKING_PREFS_COOKIE_V1 } from '.';
 import type { TrackingPrefs } from '.';
 
 type TrackingPrefsData = Partial<
-	Omit< TrackingPrefs, 'buckets' > & { buckets: Partial< TrackingPrefs[ 'buckets' ] > }
+	Omit<TrackingPrefs, 'buckets'> & { buckets: Partial<TrackingPrefs['buckets']> }
 >;
 
-const COOKIE_MAX_AGE = 60 * 60 * 24 * ( 365.25 / 2 ); /* six months; 365.25 -> avg days in year */
+const COOKIE_MAX_AGE = 60 * 60 * 24 * (365.25 / 2); /* six months; 365.25 -> avg days in year */
 
-const setTrackingPrefs = ( newPrefs: TrackingPrefsData ): TrackingPrefs => {
+const setTrackingPrefs = (newPrefs: TrackingPrefsData): TrackingPrefs => {
 	const { ok, buckets } = getTrackingPrefs();
 
 	const newOptions = {
@@ -19,10 +19,10 @@ const setTrackingPrefs = ( newPrefs: TrackingPrefsData ): TrackingPrefs => {
 		},
 	};
 
-	document.cookie = cookie.serialize( TRACKING_PREFS_COOKIE_V2, JSON.stringify( newOptions ), {
+	document.cookie = cookie.serialize(TRACKING_PREFS_COOKIE_V1, JSON.stringify(newOptions), {
 		path: '/',
 		maxAge: COOKIE_MAX_AGE,
-	} );
+	});
 
 	return newOptions;
 };

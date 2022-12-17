@@ -14,7 +14,6 @@ export {
 	default as getTrackingPrefs,
 	parseTrackingPrefs,
 	TRACKING_PREFS_COOKIE_V1,
-	TRACKING_PREFS_COOKIE_V2,
 } from './get-tracking-prefs';
 export type { TrackingPrefs } from './get-tracking-prefs';
 export { default as setTrackingPrefs } from './set-tracking-prefs';
