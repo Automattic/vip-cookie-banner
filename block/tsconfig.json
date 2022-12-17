@@ -2,6 +2,7 @@
 	"compilerOptions": {
 		// Note: Webpack config overrides this anyways
 		"outDir": "./dist",
+		"lib": ["dom"],
 		// React compatibility
 		"jsx": "react-jsx",
 		// We want ESM supported in the output, because WebPack is going to bundle this anyways,
