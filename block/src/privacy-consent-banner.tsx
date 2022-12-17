@@ -1,4 +1,4 @@
-import CookieBanner from './ConsentBanner';
+import CookieBanner from './components/CookieBanner';
 import gtmInit from './gtm-init';
 
 gtmInit();

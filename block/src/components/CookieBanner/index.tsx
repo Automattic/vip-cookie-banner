@@ -8,7 +8,7 @@ import {
 	refreshCountryCodeCookieGdpr,
 	setTrackingPrefs,
 	shouldSeeCookieBanner,
-} from '../utils';
+} from '../../utils';
 import { useCallback, useEffect, useState } from 'react';
 import cookie from 'cookie';
 
