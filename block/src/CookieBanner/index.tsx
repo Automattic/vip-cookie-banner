@@ -1,4 +1,7 @@
-import { CookieBanner, CookieBannerProps } from '@automattic/privacy-toolset';
+import {
+	CookieBanner as AutomatticCookieBanner,
+	CookieBannerProps,
+} from '@automattic/privacy-toolset';
 import useCookieBannerContent from './use-cookie-banner-content';
 import {
 	getTrackingPrefs,
@@ -22,7 +25,7 @@ const CookieBannerInner = ({ onClose }: { onClose: () => void }) => {
 
 	// TODO Replace cookie bannner view analytics action
 
-	return <CookieBanner content={content} onAccept={handleAccept} />;
+	return <AutomatticCookieBanner content={content} onAccept={handleAccept} />;
 };
 
 const CookieBannerContainer = () => {
@@ -52,8 +55,8 @@ const CookieBannerContainer = () => {
 	return show ? <CookieBannerInner onClose={handleClose} /> : null;
 };
 
-const ConsentBanner: React.FC = () => {
+const CookieBanner: React.FC = () => {
 	return <CookieBannerContainer />;
 };
 
-export default ConsentBanner;
+export default CookieBanner;
