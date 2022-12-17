@@ -1,4 +1,4 @@
-import { isE2ETest } from 'calypso/lib/e2e';
+// import { isE2ETest } from 'calypso/lib/e2e';
 import { TrackingPrefs } from './get-tracking-prefs';
 import isCountryInGdprZone from './is-country-in-gdpr-zone';
 
@@ -19,9 +19,9 @@ export default function shouldSeeCookieBanner(
 	trackingPrefs?: TrackingPrefs
 ): boolean {
 	// the banner is not shown for pages embedded as web view inside the mobile app or during e2e tests
-	if (!isServer && isE2ETest()) {
-		return false;
-	}
+	// if (!isServer && isE2ETest()) {
+	// 	return false;
+	// }
 
 	// the request for consent has already been answered, we no longer need to ask
 	if (trackingPrefs?.ok) {
