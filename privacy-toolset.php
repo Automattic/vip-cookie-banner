@@ -19,6 +19,14 @@ function create_privacy_toolset_block() {
 }
 add_action('init', 'create_privacy_toolset_block');
 
+function privacy_toolset_enqueue_styles() {
+	wp_enqueue_style(
+		'privacy-toolset',
+		__DIR__ . '/block/build/privacy-consent-banner.css?ver=' . time()
+	);
+}
+add_action('init', 'privacy_toolset_enqueue_styles');
+
 // function enqueue_gtm() {
 // 	wp_enqueue_script(
 // 		'gtm-init',
