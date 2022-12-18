@@ -1,3 +1,4 @@
+import DoNotSellDialog from './components/DoNotSellDialog';
 import CookieBanner from './components/CookieBanner';
 import gtmInit from './gtm-init';
 
@@ -9,7 +10,13 @@ const { render } = wp.element;
 const renderFrontEnd = () => {
 	const selector = '#privacy-consent-banner';
 
-	render(<CookieBanner />, document.querySelector(selector));
+	render(
+		<>
+			<CookieBanner />
+			<DoNotSellDialog />
+		</>,
+		document.querySelector(selector)
+	);
 };
 
 document.addEventListener('DOMContentLoaded', renderFrontEnd, false);
