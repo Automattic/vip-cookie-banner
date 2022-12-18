@@ -9,7 +9,7 @@ repository:
   has_issues: false
   has_projects: false
   has_wiki: false
-  homepage: https://github.com/mutations/template--basic-repo
+  homepage: https://github.com/mutations/wp-privacy-toolset
   # name: template--basic-repo
   private: true
 
