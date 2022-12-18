@@ -1,5 +1,5 @@
 import { DoNotSellDialog as AutomatticDoNotSellDialog } from '@automattic/privacy-toolset';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDoNotSell } from '../../utils';
 import { useDoNotSellContent } from './use-do-not-sell-content';
 
@@ -36,7 +36,13 @@ const DoNotSellDialog = () => {
 	}, []);
 
 	useEffect(() => {
-		document.querySelectorAll('p').forEach((element) => (element.onclick = () => openDialog()));
+		document.querySelectorAll('[href$="#do-not-sell-preferences"]').forEach(
+			(element) =>
+				(element.onclick = (event: Event) => {
+					openDialog();
+					event.preventDefault();
+				})
+		);
 	});
 
 	return (
