@@ -36,13 +36,21 @@ const DoNotSellDialog = () => {
 	}, []);
 
 	useEffect(() => {
-		document.querySelectorAll('[href$="#do-not-sell-preferences"]').forEach(
-			(element) =>
-				(element.onclick = (event: Event) => {
+		const selector = document.querySelectorAll(
+			'[href$="#do-not-sell-preferences"]'
+		) as NodeListOf<HTMLElement>;
+
+		if (shouldSeeDoNotSell) {
+			selector.forEach((element) => {
+				element.onclick = (event: Event) => {
 					openDialog();
 					event.preventDefault();
-				})
-		);
+				};
+				element.style.display = 'inline';
+			});
+		} else {
+			selector.forEach((element) => (element.style.display = 'none'));
+		}
 	});
 
 	return (
