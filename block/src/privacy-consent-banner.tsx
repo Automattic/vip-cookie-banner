@@ -7,7 +7,7 @@ gtmInit();
 // @ts-ignore
 const { render } = wp.element;
 
-const renderFrontEnd = () => {
+const App = () => {
 	const selector = '#privacy-consent-banner';
 
 	render(
@@ -19,4 +19,4 @@ const renderFrontEnd = () => {
 	);
 };
 
-document.addEventListener('DOMContentLoaded', renderFrontEnd, false);
+document.addEventListener('DOMContentLoaded', App, false);
