@@ -26,14 +26,14 @@ export default () => {
 
 	useEffect(() => {
 		// We set initial `isDoNotSell` via hook to make sure it run only on client side (when SSR)
-		setIsDoNotSell(!getTrackingPrefs().buckets.advertising);
+		setIsDoNotSell(!getTrackingPrefs().buckets.ad_storage);
 	}, []);
 
 	const onSetDoNotSell = useCallback(
 		(isActive: boolean) => {
 			// isActive = true means user has opted out of "advertising" tracking
-			const prefs = setTrackingPrefs({ ok: true, buckets: { advertising: !isActive } });
-			setIsDoNotSell(!prefs.buckets.advertising);
+			const prefs = setTrackingPrefs({ ok: true, buckets: { ad_storage: !isActive } });
+			setIsDoNotSell(!prefs.buckets.ad_storage);
 		},
 		[setIsDoNotSell]
 	);
