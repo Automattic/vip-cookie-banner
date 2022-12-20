@@ -19,27 +19,12 @@ function gtag() {
 
 const gtmInit = () => {
 	gtag('consent', 'default', defaultConsentOpts);
-	console.log(window.dataLayer);
-
-	(function (w, d, s, l, i) {
-		// w.datalayer = w.dataLayer || [];
-		// w.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-		const f = d.getElementsByTagName(s)[0],
-			j = d.createElement(s),
-			dl = l != 'dataLayer' ? '&l=' + l : '';
-		j.async = true;
-		j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-		f.parentNode.insertBefore(j, f);
-	})(window, document, 'script', 'dataLayer', 'GTM-5QBVTK7');
 
 	const prefs = getTrackingPrefs();
-
-	console.log({ prefs });
 
 	if (prefs) {
 		const opts = convertPrefsToGTMOpts(prefs);
 		gtag('consent', 'update', opts);
-		console.log(window.dataLayer);
 	}
 
 	gtag('js', new Date());
