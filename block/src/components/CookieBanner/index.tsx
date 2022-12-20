@@ -18,7 +18,6 @@ const CookieBannerInner = ({ onClose }: { onClose: () => void }) => {
 
 	const handleAccept = useCallback<CookieBannerProps['onAccept']>(
 		(buckets) => {
-			console.log({ buckets });
 			setTrackingPrefs({
 				ok: true,
 				buckets: {
