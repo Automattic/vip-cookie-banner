@@ -1,15 +1,6 @@
-import { getTrackingPrefs, TrackingPrefs } from './utils';
-
-window.dataLayer = window.dataLayer || [];
-
-type GTMConsentOptions = {
-	ad_storage: 'granted' | 'denied';
-	analytics_storage: 'granted' | 'denied';
-	functionality_storage: 'granted' | 'denied';
-	personalization_storage: 'granted' | 'denied';
-	security_storage: 'granted' | 'denied';
-	wait_for_update: number;
-};
+import { getTrackingPrefs } from './utils';
+import { convertPrefsToGTMOpts } from './utils';
+import type { GTMConsentOptions } from './utils';
 
 const defaultConsentOpts: GTMConsentOptions = {
 	ad_storage: 'denied',
@@ -17,32 +8,22 @@ const defaultConsentOpts: GTMConsentOptions = {
 	functionality_storage: 'granted',
 	personalization_storage: 'granted',
 	security_storage: 'granted',
-	wait_for_update: 1000,
+	wait_for_update: 5000,
 };
 
-const convertPrefsToGTMOpts = (prefs: TrackingPrefs) => {
-	const pref = prefs.buckets;
-
-	return {
-		ad_storage: pref.ad_storage ? 'granted' : 'denied',
-		analytics_storage: pref.analytics_storage ? 'granted' : 'denied',
-		functionality_storage: pref.functionality_storage ? 'granted' : 'denied',
-		personalization_storage: pref.personalization_storage ? 'granted' : 'denied',
-		security_storage: pref.security_storage ? 'granted' : 'denied',
-	} as GTMConsentOptions;
-};
+window.dataLayer = window.dataLayer || [];
 
 function gtag() {
 	window.dataLayer.push(arguments);
-	console.log(window.dataLayer);
 }
 
 const gtmInit = () => {
 	gtag('consent', 'default', defaultConsentOpts);
+	console.log(window.dataLayer);
 
 	(function (w, d, s, l, i) {
-		w[l] = w[l] || [];
-		w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+		// w.datalayer = w.dataLayer || [];
+		// w.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
 		const f = d.getElementsByTagName(s)[0],
 			j = d.createElement(s),
 			dl = l != 'dataLayer' ? '&l=' + l : '';
@@ -53,10 +34,16 @@ const gtmInit = () => {
 
 	const prefs = getTrackingPrefs();
 
+	console.log({ prefs });
+
 	if (prefs) {
 		const opts = convertPrefsToGTMOpts(prefs);
 		gtag('consent', 'update', opts);
+		console.log(window.dataLayer);
 	}
+
+	gtag('js', new Date());
+	gtag('config', 'GTM-5QBVTK7');
 };
 
 export default gtmInit;

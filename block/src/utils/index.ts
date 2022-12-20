@@ -18,3 +18,5 @@ export {
 export type { TrackingPrefs } from './get-tracking-prefs';
 export { default as setTrackingPrefs } from './set-tracking-prefs';
 export { default as useDoNotSell } from './use-do-not-sell';
+export { convertBucketsToGTMOpts, convertPrefsToGTMOpts } from './convert-prefs';
+export type { GTMConsentOptions } from './convert-prefs';

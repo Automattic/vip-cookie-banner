@@ -4,6 +4,7 @@ import {
 } from '@automattic/privacy-toolset';
 import useCookieBannerContent from './use-cookie-banner-content';
 import {
+	convertBucketsToGTMOpts,
 	getTrackingPrefs,
 	refreshCountryCodeCookieGdpr,
 	setTrackingPrefs,
@@ -17,7 +18,16 @@ const CookieBannerInner = ({ onClose }: { onClose: () => void }) => {
 
 	const handleAccept = useCallback<CookieBannerProps['onAccept']>(
 		(buckets) => {
-			setTrackingPrefs({ ok: true, buckets });
+			console.log({ buckets });
+			setTrackingPrefs({
+				ok: true,
+				buckets: {
+					...convertBucketsToGTMOpts(buckets),
+					functionality_storage: true,
+					personalization_storage: true,
+					security_storage: true,
+				},
+			});
 			onClose();
 		},
 		[onClose]
@@ -31,7 +41,6 @@ const CookieBannerInner = ({ onClose }: { onClose: () => void }) => {
 const CookieBannerContainer = () => {
 	const [show, setShow] = useState(false);
 
-	// TODO GTM updata as soon as prefs updated
 	useEffect(() => {
 		const controller = new AbortController();
 
