@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"attributes": {},
+	"name": "privacy-tools/consent-banner",
+	"version": "0.1.0",
+	"title": "Privacy Tools Consent Banner",
+	"category": "widgets",
+	"icon": "privacy",
+	"description": "Implements a privacy banner with options for users to set privacy preferences.",
+	"supports": {
+			"html": false
+	},
+	"textdomain": "privacy-tools",
+	"editorScript": "file:./index.ts",
+	"viewScript": "file:./privacy-consent-banner.tsx"
+}

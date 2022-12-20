@@ -1,0 +1,41 @@
+# See https://developer.github.com/v3/repos/#edit for all available settings.
+repository:
+  allow_merge_commit: true
+  allow_rebase_merge: false
+  allow_squash_merge: false
+  default_branch: main
+  # description: template--basic-repo
+  has_downloads: false
+  has_issues: false
+  has_projects: false
+  has_wiki: false
+  homepage: https://github.com/mutations/wp-privacy-toolset
+  # name: template--basic-repo
+  private: true
+
+# Labels: define labels for Issues and Pull Requests
+labels:
+  - name: Needs Code Review
+    color: ff8a00
+  - name: Needs QA
+    color: ff00d1
+  - name: On Hold
+    color: f8ff00
+
+# https://developer.github.com/v3/repos/branches/#update-branch-protection
+branches:
+  - name: main
+    protection:
+      enforce_admins: true
+      required_pull_request_reviews:
+        dismiss_stale_reviews: true
+        dismissal_restrictions: {}
+        require_code_owner_reviews: false
+        required_approving_review_count: 1
+      # Required. Require status checks to pass before merging.
+      required_status_checks:
+        contexts:
+          - WIP
+        strict: true
+      # Required. Enforce all configured restrictions for administrators.
+      restrictions: null
