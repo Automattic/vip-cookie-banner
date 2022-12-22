@@ -7,9 +7,17 @@ export const useDoNotSellContent = () => {
 			<>
 				<p>
 					{__(
-						'Your privacy is critically important to us so we strive to be transparent in how we are collecting, using, and sharing your information. We use cookies and other technologies to help us identify and track visitors to our sites, to store usage and access preferences for our services, to track and understand email campaign effectiveness, and to deliver targeted ads. Learn more in our {{privacyPolicyLink}}Privacy Policy{{/privacyPolicyLink}} and our {{cookiePolicyLink}}Cookie Policy{{/cookiePolicyLink}}.',
+						'Your privacy is critically important to us so we strive to be transparent in how we are collecting, using, and sharing your information. We use cookies and other technologies to help us identify and track visitors to our sites, to store usage and access preferences for our services, to track and understand email campaign effectiveness, and to deliver targeted ads. Learn more in ',
 						'automattic-privacy-toolset'
 					)}
+					<a href="https://automattic.com/privacy/" target="_blank">
+						our Privacy Policy
+					</a>
+					{__(' and ', 'automattic-privacy-toolset')}
+					<a href="https://automattic.com/cookies/" target="_blank">
+						our Cookie Policy
+					</a>
+					.
 				</p>
 				<p>
 					{__(
@@ -25,14 +33,16 @@ export const useDoNotSellContent = () => {
 				</p>
 				<p>
 					{__(
-						'Our opt-out is managed through cookies, so if you delete cookies, your browser is set to delete cookies automatically after a certain length of time, or if you visit sites in a different browser, you’ll need to make this selection again.'
+						'Our opt-out is managed through cookies, so if you delete cookies, your browser is set to delete cookies automatically after a certain length of time, or if you visit sites in a different browser, you’ll need to make this selection again.',
+						'automattic-privacy-toolset'
 					)}
 				</p>
 				<p>
 					{__(
-						'If you have any questions about this opt out, or how we honor your legal rights, you can contact us at {{contactLink /}}',
+						'If you have any questions about this opt out, or how we honor your legal rights, you can contact us at ',
 						'automattic-privacy-toolset'
 					)}
+					<a href="mailto:vipprivacyshield@automattic.com">vipprivacyshield@automattic.com</a>.
 				</p>
 			</>
 		),

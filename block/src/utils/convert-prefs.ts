@@ -6,13 +6,54 @@ type Buckets = {
 	advertising: boolean;
 };
 
+type GDPRRegionType =
+  // European Member countries
+  'AT' | // Austria
+  'BE' | // Belgium
+  'BG' | // Bulgaria
+  'CY' | // Cyprus
+  'CZ' | // Czech Republic
+  'DE' | // Germany
+  'DK' | // Denmark
+  'EE' | // Estonia
+  'ES' | // Spain
+  'FI' | // Finland
+  'FR' | // France
+  'GR' | // Greece
+  'HR' | // Croatia
+  'HU' | // Hungary
+  'IE' | // Ireland
+  'IT' | // Italy
+  'LT' | // Lithuania
+  'LU' | // Luxembourg
+  'LV' | // Latvia
+  'MT' | // Malta
+  'NL' | // Netherlands
+  'PL' | // Poland
+  'PT' | // Portugal
+  'RO' | // Romania
+  'SE' | // Sweden
+  'SI' | // Slovenia
+  'SK' | // Slovakia
+  'GB' | // United Kingdom
+  // Single Market Countries that GDPR applies to
+  'CH' | // Switzerland
+  'IS' | // Iceland
+  'LI' | // Liechtenstein
+  'NO'; // Norway
+
+type PrivacyLawRegions = GDPRRegionType |
+  'US' // United States
+;
+
 type GTMConsentOptions = {
 	ad_storage: 'granted' | 'denied';
 	analytics_storage: 'granted' | 'denied';
 	functionality_storage: 'granted' | 'denied';
 	personalization_storage: 'granted' | 'denied';
 	security_storage: 'granted' | 'denied';
-	wait_for_update: number;
+  wait_for_update: number;
+  region?: PrivacyLawRegions[];
 };
 
 const convertBucketsToGTMOpts = (
@@ -37,4 +78,4 @@ const convertPrefsToGTMOpts = (prefs: TrackingPrefs) => {
 };
 
 export { convertBucketsToGTMOpts, convertPrefsToGTMOpts };
-export type { GTMConsentOptions };
+export type { GTMConsentOptions, GDPRRegionType };
