@@ -20,13 +20,14 @@ function create_privacy_toolset_block() {
 add_action('init', 'create_privacy_toolset_block');
 
 function privacy_toolset_enqueue_styles() {
-	$asset_file = include(__DIR__ . '/block/build/privacy-consent-banner.asset.php');
+	$asset_file = include(plugin_dir_url(__FILE__) . '/block/build/privacy9-consent-banner.asset.php');
 
 	wp_enqueue_style(
 		'privacy-toolset',
-		__DIR__ . '/block/build/privacy-consent-banner.css',
+		plugin_dir_url(__FILE__) . '/block/build/privacy-consent-banner.css',
 		[],
 		$asset_file['version']
 	);
 }
-add_action('init', 'privacy_toolset_enqueue_styles');
+
+add_action('wp_enqueue_scripts', 'privacy_toolset_enqueue_styles');
