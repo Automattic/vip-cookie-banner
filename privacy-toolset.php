@@ -24,7 +24,7 @@ function privacy_toolset_enqueue_styles() {
 
 	wp_enqueue_style(
 		'privacy-toolset',
-		plugin_dir_url(__FILE__) . '/block/build/privacy-consent-banner.css',
+		plugin_dir_url(__FILE__) . 'block/build/privacy-consent-banner.css',
 		[],
 		$asset_file['version']
 	);
