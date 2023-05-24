@@ -1,0 +1,114 @@
+version: 2.1
+jobs:
+  buildWpPrivacyToolset:
+    docker:
+      - image: cimg/node:16.18
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: v5-deps-valet-node-{{ checksum "themes/vip-valet/yarn.lock" }}-{{ checksum "themes/vip-valet/theme-plugins/athletics-blocks/package-lock.json" }}
+
+      - run:
+          name: Install Dependencies
+          command: |
+            cd themes/vip-valet && yarn install --frozen-lockfile
+            cd theme-plugins/athletics-blocks && npm ci
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v5-deps-valet-node-{{ checksum "themes/vip-valet/yarn.lock" }}-{{ checksum "themes/vip-valet/theme-plugins/athletics-blocks/package-lock.json" }}
+
+      - run:
+          name: Build Assets
+          command: |
+            cd themes/vip-valet
+            yarn compile:css
+            yarn build
+            cd theme-plugins/athletics-blocks
+            npm run build
+
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - ./themes/vip-valet/assets
+            - ./themes/vip-valet/build
+            - ./themes/vip-valet/theme-plugins/athletics-blocks/build
+  deploy:
+    docker:
+      - image: circleci/node:16.13-bullseye
+    steps:
+      - checkout
+
+      - attach_workspace:
+          at: ./
+
+      - run:
+          name: Clean gitignores
+          command: |
+            rm .gitignore
+
+      - run:
+          name: Create build readme
+          command: |
+            if [ -d build ];
+            then
+              echo "Build directory exists";
+            else
+              mkdir build
+            fi
+            touch build/README.md
+            echo "This was built in CI on $(date)" > build/README.md
+
+      - run:
+          name: Add some helpful info to the README
+          command: |
+            echo -e "\n\n## Continuous Integration & Continuous Deployment on VIP Go" >> build/README.md
+            echo -e "\nSee our docs in the [VIP Documentation](https://docs.wpvip.com/technical-references/development-workflow/automated-build-and-deploy/)" >> build/README.md
+            echo -e "\n\nThis branch e.g. master-built is created automatically when " >> build/README.md
+            echo "a commit or merge is made to the base branch e.g. master, using [your CircleCI configuration](../.circleci/config.yml), which you can **customize**" >> build/README.md
+
+      # Test to ensure the build was good, do not deploy bad stuff!
+      - run:
+          name: Test the build
+          command: |
+            if [ -f build/README.md ]; then
+              echo "Build succeeded";
+            else
+              echo "Build failed, file missing"; exit 1
+            fi
+
+      - add_ssh_keys:
+          fingerprints:
+            - "54:5b:8e:bd:f9:67:85:b1:76:7a:15:81:d0:1f:50:f7"
+      # Run the deploy:
+      # REQUIRED: If you're amended an existing config, the below are two
+      # of the required lines you must add
+      # This will push the result to the {currentbranch}-built branch
+      - deploy:
+          name: Deploy -built branch to github
+          command: bash <(curl -s "https://raw.githubusercontent.com/Automattic/vip-go-build/master/deploy.sh")
+workflows:
+   version: 2
+   deploy:
+     jobs:
+         - buildWpPrivacyToolset:
+            filters:
+             branches:
+              only:
+                - jf/internal/circle-ci-build--prs-717
+                - staging
+                - preprod
+                - main
+
+         - deploy:
+            requires:
+              - buildWpPrivacyToolset
+            filters:
+              branches:
+                only:
+                  - jf/internal/circle-ci-build--prs-717
+                  - staging
+                  - preprod
+                  - main
