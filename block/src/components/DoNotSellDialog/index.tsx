@@ -37,7 +37,7 @@ const DoNotSellDialog = () => {
 
 	useEffect(() => {
 		const selector = document.querySelectorAll(
-			'[href$="#do-not-sell-preferences"]'
+			'#do-not-sell-preferences'
 		) as NodeListOf<HTMLElement>;
 
 		if (shouldSeeDoNotSell) {
