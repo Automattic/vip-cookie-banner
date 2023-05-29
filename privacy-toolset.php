@@ -17,6 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class PrivacyToolset {
+
   	/**
      * Javascript built asset path.
      *
