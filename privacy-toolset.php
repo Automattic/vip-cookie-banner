@@ -36,7 +36,6 @@ class PrivacyToolset {
 	   * Class constructor.
 	   */
     public function __construct() {
-        // Register block for block themes and enqueue assets
         add_action( 'init', [ $this, 'register_assets' ] );
     }
 
