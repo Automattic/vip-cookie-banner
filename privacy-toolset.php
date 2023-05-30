@@ -56,7 +56,7 @@ class PrivacyToolset {
     }
 
     private function enqueue_javascript() {
-        wp_enqueue_script( 'vip-cookie-banner-js', plugins_url( $this->javascript_path, __FILE__ ), array( 'react', 'react-dom', 'wp-components', 'wp-element', 'wp-i18n' ), '1.0.0', true);
+        wp_enqueue_script( 'privacy-toolset-js', plugins_url( $this->javascript_path, __FILE__ ), array( 'react', 'react-dom', 'wp-components', 'wp-element', 'wp-i18n' ), '1.0.0', true);
     }
 
     private function enqueue_css() {
