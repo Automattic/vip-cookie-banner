@@ -65,10 +65,13 @@ export const parseTrackingPrefs = (
  */
 export default function getTrackingPrefs(): TrackingPrefs {
 	const cookies = cookie.parse(document.cookie);
-	const isCountryGdpr = isCountryInGdprZone(cookies.country_code);
-	const isCountryCcpa = isRegionInCcpaZone(cookies.country_code, cookies.region);
+	const isCountryGdpr = ( undefined === cookies.country_code ) ? null : isCountryInGdprZone(cookies.country_code);
+	const isCountryCcpa = ( undefined === cookies.country_code || undefined === cookies.region ) ? null :  isRegionInCcpaZone(cookies.country_code, cookies.region);
 
-	if (!isCountryGdpr && !isCountryCcpa) {
+	if ( null === isCountryCcpa || null === isCountryGdpr ) {
+		return prefsDisallowAll; // better safe than sorry
+	}
+	if ( ! isCountryGdpr && ! isCountryCcpa ) {
 		return prefsAllowAll;
 	}
 
