@@ -14,6 +14,7 @@ const setTrackingPrefs = (newPrefs: TrackingPrefs): TrackingPrefs | false => {
 
 		const newOptions = {
 			ok: typeof newPrefs.ok === 'boolean' ? newPrefs.ok : ok,
+			isDefault: false,
 			buckets: {
 				...buckets,
 				...newPrefs.buckets,

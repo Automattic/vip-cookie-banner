@@ -20,6 +20,7 @@ const CookieBannerInner = ({ onClose }: { onClose: () => void }) => {
 		(buckets) => {
 			setTrackingPrefs({
 				ok: true,
+				isDefault: false,
 				buckets: {
 					...convertBucketsToGTMOpts(buckets),
 					functionality_storage: true,
