@@ -32,7 +32,7 @@ export default () => {
 	const onSetDoNotSell = useCallback(
 		(isActive: boolean) => {
 			// isActive = true means user has opted out of "advertising" tracking
-			const prefs = setTrackingPrefs({ ok: true, buckets: { ad_storage: !isActive } });
+			const prefs = setTrackingPrefs({ ok: true, isDefault: false, buckets: { ad_storage: !isActive } });
 			setIsDoNotSell(!prefs.buckets.ad_storage);
 		},
 		[setIsDoNotSell]
