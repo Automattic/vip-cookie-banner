@@ -78,7 +78,7 @@ const defaultConsentOpts: GTMConsentOptions = {
 
 window.dataLayer = window.dataLayer || [];
 
-function gtag() {
+export function gtag( ...args: any[] ) {
   window.dataLayer.push(arguments);
 }
 
