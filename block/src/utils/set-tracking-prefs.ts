@@ -1,7 +1,7 @@
 import cookie from 'cookie';
 import { getTrackingPrefs, TRACKING_PREFS_COOKIE_V1 } from '.';
 import type { TrackingPrefs } from '.';
-import type { GTMConsentOptions } from '../gtm-init';
+import { gtag } from "../gtm-init";
 import { convertPrefsToGTMOpts } from './convert-prefs';
 
 // type TrackingPrefsData = Partial<Omit<TrackingPrefs, 'buckets'> & { buckets:  }>;
@@ -26,10 +26,8 @@ const setTrackingPrefs = (newPrefs: TrackingPrefs): TrackingPrefs | false => {
 			maxAge: COOKIE_MAX_AGE,
 		});
 
-		if (typeof gtag === 'function') {
-			const opts = convertPrefsToGTMOpts(newOptions);
-			gtag('consent', 'update', opts);
-		}
+		gtag('consent', 'update', convertPrefsToGTMOpts(newOptions));
+		gtag( 'event', 'consent_update' ); // so we can start tracking without a page reload
 
 		return newOptions;
 	}
