@@ -38,7 +38,7 @@ const CookieBannerInner = ({ onClose }: { onClose: () => void }) => {
 	return <AutomatticCookieBanner content={content} onAccept={handleAccept} />;
 };
 
-const CookieBannerContainer = () => {
+const CookieBanner: React.FC = () => {
 	const [show, setShow] = useState(false);
 
 	useEffect(() => {
@@ -62,10 +62,6 @@ const CookieBannerContainer = () => {
 	}, [setShow]);
 
 	return show ? <CookieBannerInner onClose={handleClose} /> : null;
-};
-
-const CookieBanner: React.FC = () => {
-	return <CookieBannerContainer />;
 };
 
 export default CookieBanner;
