@@ -1,20 +1,22 @@
-import DoNotSellDialog from './components/DoNotSellDialog';
-import CookieBanner from './components/CookieBanner';
 import gtmInit from './gtm-init';
+import React from 'react';
 
 gtmInit();
 
 // @ts-ignore
 const { render } = wp.element;
 
+const LazyCookieBanner = React.lazy(() => import('./components/CookieBanner'))
+const LazyDoNotSellDialog = React.lazy(() => import('./components/DoNotSellDialog'))
+
 const App = () => {
 	const selector = '#privacy-consent-banner';
 
 	render(
-		<>
-			<CookieBanner />
-			<DoNotSellDialog />
-		</>,
+		<React.Suspense>
+			<LazyCookieBanner />
+			<LazyDoNotSellDialog />
+		</React.Suspense>,
 		document.querySelector(selector)
 	);
 };
