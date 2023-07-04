@@ -1,7 +1,7 @@
-import type { CookieBannerProps } from '@automattic/privacy-toolset';
+// import type { CookieBannerProps } from '@automattic/privacy-toolset';
 import { __ } from '@wordpress/i18n';
 
-const useCookieBannerContent = (): CookieBannerProps['content'] => {
+const useCookieBannerContent = () => {
 	return {
 		simpleConsent: {
 			description: (
