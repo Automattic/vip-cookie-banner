@@ -1,4 +1,4 @@
-// import { DoNotSellDialog as AutomatticDoNotSellDialog } from '@automattic/privacy-toolset';
+import { DoNotSellDialog as AutomatticDoNotSellDialog } from '../AutomatticDoNotSellDialog';
 import { useCallback, useEffect, useState } from 'react';
 import { useDoNotSell } from '../../utils';
 import { useDoNotSellContent } from './use-do-not-sell-content';
@@ -12,23 +12,21 @@ type Props = {
 
 const DoNotSellDialogContainer = ({ isOpen, ...props }: Props) => {
 	const content = useDoNotSellContent();
-	return null;
-	// return (
-	// 	<AutomatticDoNotSellDialog
-	// 		isOpen={isOpen}
-	// 		content={content}
-	// 		modalProps={{
-	// 			bodyOpenClassName: null,
-	// 		}}
-	// 		{...props}
-	// 	/>
-	// );
+	return (
+		<AutomatticDoNotSellDialog
+			isOpen={isOpen}
+			content={content}
+			modalProps={{
+				bodyOpenClassName: null,
+			}}
+			{...props}
+		/>
+	);
 };
 
 const DoNotSellDialog = () => {
-	const { isDoNotSell, onSetDoNotSell } = useDoNotSell();
-	const shouldSeeDoNotSell = true;
-	const [isDialogOpen, setIsDialogOpen] = useState(true);
+	const { shouldSeeDoNotSell, isDoNotSell, onSetDoNotSell } = useDoNotSell();
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
 	const openDialog = useCallback(() => {
 		setIsDialogOpen(true);

@@ -33,27 +33,28 @@ const CookieBannerInner = ({ onClose }: { onClose: () => void }) => {
 	);
 
 	// TODO Replace cookie bannner view analytics action
+
 	return <AutomatticCookieBanner content={content} onAccept={handleAccept} />;
 };
 
 const CookieBannerContainer = () => {
-	const [show, setShow] = useState(true);
+	const [show, setShow] = useState(false);
 
-	// useEffect(() => {
-	// 	const controller = new AbortController();
+	useEffect(() => {
+		const controller = new AbortController();
 
-	// 	refreshCountryCodeCookieGdpr(controller.signal)
-	// 		.then(() => {
-	// 			const cookies = cookie.parse(document.cookie);
+		refreshCountryCodeCookieGdpr(controller.signal)
+			.then(() => {
+				const cookies = cookie.parse(document.cookie);
 
-	// 			setShow(shouldSeeCookieBanner(cookies.country_code, getTrackingPrefs()));
-	// 		})
-	// 		.catch(() => {
-	// 			setShow(shouldSeeCookieBanner(undefined, getTrackingPrefs()));
-	// 		});
+				setShow(shouldSeeCookieBanner(cookies.country_code, getTrackingPrefs()));
+			})
+			.catch(() => {
+				setShow(shouldSeeCookieBanner(undefined, getTrackingPrefs()));
+			});
 
-	// 	return () => controller.abort();
-	// }, [setShow]);
+		return () => controller.abort();
+	}, [setShow]);
 
 	const handleClose = useCallback(() => {
 		setShow(false);
