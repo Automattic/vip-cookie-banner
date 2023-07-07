@@ -1,0 +1,38 @@
+# Inspired by https://github.com/kategengler/put-built-npm-package-contents-on-branch/blob/main/action.yml
+name: Build main-build CI
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build --if-present
+      - name: Commit files
+        shell: 'bash'
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f build
+          echo "commit"
+          git commit -a -m "Build"
+          echo "committed"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}--built
+          force: true
+
