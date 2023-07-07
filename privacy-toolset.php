@@ -15,14 +15,18 @@
 // TODO better version than current time
 
 function create_privacy_toolset_block() {
-  register_block_type(__DIR__ . '/block/build');
+	register_block_type(__DIR__ . '/block/build');
 }
 add_action('init', 'create_privacy_toolset_block');
 
 function privacy_toolset_enqueue_styles() {
-  wp_enqueue_style(
-    'privacy-toolset',
-    __DIR__ . '/block/build/privacy-consent-banner.css?ver=' . time()
-  );
+	$asset_file = include(__DIR__ . '/block/build/privacy-consent-banner.asset.php');
+
+	wp_enqueue_style(
+		'privacy-toolset',
+		__DIR__ . '/block/build/privacy-consent-banner.css',
+		[],
+		$asset_file['version']
+	);
 }
 add_action('init', 'privacy_toolset_enqueue_styles');
