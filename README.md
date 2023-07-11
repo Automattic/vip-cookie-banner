@@ -5,7 +5,7 @@ This WordPress plugin is designed to implement the cookie banner and "do not sel
 ## Use
 
 1.  Add the plugin and activate
-2.  Place the "Privacy Tools Consent Banner" block in a template part used on all pages—i.e. your footer. 
+2.  Place the "Privacy Tools Consent Banner" block in a template part used on all pages—i.e. your footer.
 3.  Add the do-not-sell link to the same component as a normal link with the anchor `#do-not-sell-preferences`
 
 ## Development
