@@ -1,4 +1,4 @@
-import { FormToggle } from '@wordpress/components';
+import { FormToggle } from '../FormToggle';
 import { FormEventHandler } from 'react';
 import Modal from 'react-modal';
 import type { Props as ModalProps } from 'react-modal';

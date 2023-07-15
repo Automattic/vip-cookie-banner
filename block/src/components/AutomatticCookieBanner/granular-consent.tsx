@@ -1,4 +1,4 @@
-import { FormToggle } from '@wordpress/components';
+import { FormToggle } from '../FormToggle';
 import { ChangeEvent, useCallback } from 'react';
 import type { Buckets, GranularConsentContent } from './types';
 
