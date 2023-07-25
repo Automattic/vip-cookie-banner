@@ -1,4 +1,4 @@
-import { DoNotSellDialog as AutomatticDoNotSellDialog } from '@automattic/privacy-toolset';
+import { DoNotSellDialog as AutomatticDoNotSellDialog } from '../AutomatticDoNotSellDialog';
 import { useCallback, useEffect, useState } from 'react';
 import { useDoNotSell } from '../../utils';
 import { useDoNotSellContent } from './use-do-not-sell-content';

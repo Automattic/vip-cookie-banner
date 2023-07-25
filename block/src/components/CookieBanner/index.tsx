@@ -1,7 +1,7 @@
 import {
 	CookieBanner as AutomatticCookieBanner,
 	CookieBannerProps,
-} from '@automattic/privacy-toolset';
+} from '../AutomatticCookieBanner';
 import useCookieBannerContent from './use-cookie-banner-content';
 import {
 	convertBucketsToGTMOpts,
@@ -20,6 +20,7 @@ const CookieBannerInner = ({ onClose }: { onClose: () => void }) => {
 		(buckets) => {
 			setTrackingPrefs({
 				ok: true,
+				isDefault: false,
 				buckets: {
 					...convertBucketsToGTMOpts(buckets),
 					functionality_storage: true,
@@ -37,7 +38,7 @@ const CookieBannerInner = ({ onClose }: { onClose: () => void }) => {
 	return <AutomatticCookieBanner content={content} onAccept={handleAccept} />;
 };
 
-const CookieBannerContainer = () => {
+const CookieBanner: React.FC = () => {
 	const [show, setShow] = useState(false);
 
 	useEffect(() => {
@@ -61,10 +62,6 @@ const CookieBannerContainer = () => {
 	}, [setShow]);
 
 	return show ? <CookieBannerInner onClose={handleClose} /> : null;
-};
-
-const CookieBanner: React.FC = () => {
-	return <CookieBannerContainer />;
 };
 
 export default CookieBanner;

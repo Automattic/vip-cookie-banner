@@ -1,6 +1,7 @@
 {
 	"devDependencies": {
 		"@types/cookie": "^0.5.1",
+		"@types/react-modal": "^3.16.0",
 		"@types/wordpress__block-editor": "^7.0.0",
 		"@types/wordpress__blocks": "^11.0.9",
 		"@wordpress/scripts": "^24.6.0"
@@ -21,7 +22,6 @@
 		"test:unit": "wp-scripts test-unit-js"
 	},
 	"dependencies": {
-		"@automattic/privacy-toolset": "^1.1.0",
 		"@wordpress/block-editor": "^10.5.0",
 		"@wordpress/blocks": "^11.21.0",
 		"cookie": "^0.5.0",

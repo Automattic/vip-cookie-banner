@@ -78,7 +78,7 @@ const defaultConsentOpts: GTMConsentOptions = {
 
 window.dataLayer = window.dataLayer || [];
 
-function gtag() {
+export function gtag( ...args: any[] ) {
   window.dataLayer.push(arguments);
 }
 
@@ -89,7 +89,7 @@ const gtmInit = () => {
 
 	const prefs = getTrackingPrefs();
 
-	if (prefs) {
+	if ( prefs && ! prefs.isDefault ) {
 		const opts = convertPrefsToGTMOpts(prefs);
 		gtag('consent', 'update', opts);
 	}

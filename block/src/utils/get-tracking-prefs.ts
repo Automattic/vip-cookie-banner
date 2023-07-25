@@ -6,6 +6,7 @@ export const TRACKING_PREFS_COOKIE_V1 = 'gtm_options';
 
 export type TrackingPrefs = {
 	ok: boolean;
+	isDefault: boolean;
 	buckets: {
 		ad_storage: boolean;
 		analytics_storage: boolean;
@@ -17,6 +18,7 @@ export type TrackingPrefs = {
 
 const prefsDisallowAll: TrackingPrefs = {
 	ok: false,
+	isDefault: true,
 	buckets: {
 		ad_storage: false,
 		analytics_storage: false,
@@ -28,6 +30,7 @@ const prefsDisallowAll: TrackingPrefs = {
 
 const prefsAllowAll: TrackingPrefs = {
 	ok: false,
+	isDefault: true,
 	buckets: {
 		ad_storage: true,
 		analytics_storage: true,
@@ -46,6 +49,7 @@ export const parseTrackingPrefs = (
 	if (typeof ok === 'boolean') {
 		return {
 			ok,
+			isDefault: false,
 			buckets: {
 				...defaultPrefs.buckets,
 				...buckets,
@@ -64,23 +68,27 @@ export const parseTrackingPrefs = (
  * @returns Whether we may track the current user
  */
 export default function getTrackingPrefs(): TrackingPrefs {
-	const cookies = cookie.parse(document.cookie);
-	const isCountryGdpr = isCountryInGdprZone(cookies.country_code);
-	const isCountryCcpa = isRegionInCcpaZone(cookies.country_code, cookies.region);
+	const cookies = cookie.parse( document.cookie );
+	const isCountryGdpr = ( undefined === cookies.country_code ) ? null : isCountryInGdprZone(cookies.country_code);
+	const isCountryCcpa = ( undefined === cookies.country_code || undefined === cookies.region ) ? null :  isRegionInCcpaZone(cookies.country_code, cookies.region);
 
-	if (!isCountryGdpr && !isCountryCcpa) {
+	if ( null === isCountryCcpa || null === isCountryGdpr ) {
+		return prefsDisallowAll; // better safe than sorry
+	}
+	if ( ! isCountryGdpr && ! isCountryCcpa ) {
 		return prefsAllowAll;
 	}
 
 	// default tracking mechanism for GDPR is opt-in, for CCPA is opt-out:
 	const defaultPrefs = isCountryGdpr ? prefsDisallowAll : prefsAllowAll;
 
-	const { ok, buckets } = parseTrackingPrefs(cookies[TRACKING_PREFS_COOKIE_V1], defaultPrefs);
+	const { ok, isDefault, buckets } = parseTrackingPrefs(cookies[TRACKING_PREFS_COOKIE_V1], defaultPrefs);
 
 	if (isCountryCcpa) {
 		// For CCPA, only the advertising bucket is relevant, the rest are always true
 		return {
 			ok,
+			isDefault: false,
 			buckets: {
 				...prefsAllowAll.buckets,
 				ad_storage: buckets.ad_storage,
@@ -89,5 +97,5 @@ export default function getTrackingPrefs(): TrackingPrefs {
 	}
 
 	// For CCPA, only the advertising bucket is relevant, the rest are always true
-	return { ok, buckets };
+	return { ok, isDefault, buckets };
 }
