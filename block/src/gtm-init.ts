@@ -95,7 +95,6 @@ const gtmInit = () => {
 	}
 
 	gtag('js', new Date());
-	gtag('config', 'GTM-5QBVTK7');
 };
 
   export default gtmInit;

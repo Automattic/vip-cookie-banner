@@ -13,7 +13,7 @@ const App = () => {
 	const selector = '#privacy-consent-banner';
 
 	render(
-		<React.Suspense>
+		<React.Suspense fallback={<div>Loading...</div>}>
 			<LazyCookieBanner />
 			<LazyDoNotSellDialog />
 		</React.Suspense>,

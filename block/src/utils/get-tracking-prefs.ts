@@ -30,7 +30,7 @@ const prefsDisallowAll: TrackingPrefs = {
 
 const prefsAllowAll: TrackingPrefs = {
 	ok: false,
-	isDefault: true,
+	isDefault: false,
 	buckets: {
 		ad_storage: true,
 		analytics_storage: true,
