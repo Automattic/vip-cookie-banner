@@ -23,7 +23,6 @@ export const FormToggle = (
 				type="checkbox"
 				checked={ checked }
 				onChange={ onChange }
-				disabled={ disabled }
 				{...rest}
 			/>
 			<span className="components-form-toggle__track"></span>

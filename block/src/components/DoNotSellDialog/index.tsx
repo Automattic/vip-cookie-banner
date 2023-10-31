@@ -46,7 +46,7 @@ const DoNotSellDialog = () => {
 					openDialog();
 					event.preventDefault();
 				};
-				element.style.display = 'block';
+				element.style.display = 'inline';
 			});
 		} else {
 			selector.forEach((element) => (element.style.display = 'none'));
