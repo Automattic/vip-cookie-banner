@@ -1,0 +1,18 @@
+# Development files
+.stylelintrc.json
+.prettierrc.js
+.prettierignore
+.rtlcssrc
+.stylelintignore
+.wp-env.json
+.cache/
+node_modules
+composer.lock
+
+# Ignore temporary OS files
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
